@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 
-namespace Alura.Adopet.Console;
+namespace Alura.Adopet.Console.Comandos;
 
 [DocComando(instrucao: "help", documentacao: "adopet help comando que exibe informações de ajuda.\nadopet help <NOME_COMANDO> para acessar a ajuda de um comando especifico.")]
-internal class Help
+internal class Help : IComando
 {
     private Dictionary<string, DocComando> docs;
 
@@ -15,7 +15,13 @@ internal class Help
             .ToDictionary(d => d.Instrucao);
     }
 
-    public void ExibeDocumentacao(string[] args)
+    public Task ExecutarAsync(string[] args)
+    {
+        ExibeDocumentacao(args);
+        return Task.CompletedTask;
+    }
+
+    private void ExibeDocumentacao(string[] args)
     {
         // se não passou mais nenhum argumento mostra help de todos os comandos
         if (args.Length == 1)
@@ -44,9 +50,6 @@ internal class Help
 
     private static void ExibirDocumentacao(DocComando doc)
     {
-        foreach (var descricao in doc.Documentacao)
-        {
-            System.Console.WriteLine(descricao);
-        }
+        System.Console.WriteLine(doc.Documentacao);
     }
 }

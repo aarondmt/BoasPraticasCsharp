@@ -1,4 +1,4 @@
-﻿namespace Alura.Adopet.Console;
+﻿namespace Alura.Adopet.Console.Comandos;
 
 [AttributeUsage(AttributeTargets.Class)]
 internal sealed class DocComando : Attribute

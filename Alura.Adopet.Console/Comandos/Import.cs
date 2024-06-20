@@ -1,14 +1,18 @@
-﻿using System.Net.Http.Json;
+﻿using Alura.Adopet.Console.Modelos;
+using Alura.Adopet.Console.Servicos;
+using Alura.Adopet.Console.Util;
 
-namespace Alura.Adopet.Console;
+namespace Alura.Adopet.Console.Comandos;
 
 [DocComando(instrucao: "import", documentacao: "adopet import <ARQUIVO> comando que realiza a importação do arquivo de pets.")]
-internal class Import : CommonAbstract
+internal class Import : IComando
 {
-    public Import(HttpClient client) : base(client)
-    { }
+    public async Task ExecutarAsync(string[] args)
+    {
+        await ImportacaoArquivoPetAsync(caminhoDoArquivoDeImportacao: args[1]);
+    }
 
-    public async Task ImportacaoArquivoPetAsync(string caminhoDoArquivoDeImportacao)
+    private async Task ImportacaoArquivoPetAsync(string caminhoDoArquivoDeImportacao)
     {
         LeitorDeArquivo leitorDeArquivo = new();
         List<Pet> listaDePet = leitorDeArquivo.RealizaLeitura(caminhoDoArquivoDeImportacao);
@@ -17,7 +21,8 @@ internal class Import : CommonAbstract
             System.Console.WriteLine(pet);
             try
             {
-                var resposta = await CreatePetAsync(pet);
+                var httpClientPet = new HttpClientPet();
+                await httpClientPet.CreatePetAsync(pet);
             }
             catch (Exception ex)
             {
@@ -25,14 +30,5 @@ internal class Import : CommonAbstract
             }
         }
         System.Console.WriteLine("Importação concluída!");
-    }
-
-    Task<HttpResponseMessage> CreatePetAsync(Pet pet)
-    {
-        HttpResponseMessage? response = null;
-        using (response = new HttpResponseMessage())
-        {
-            return client.PostAsJsonAsync("pet/add", pet);
-        }
     }
 }
