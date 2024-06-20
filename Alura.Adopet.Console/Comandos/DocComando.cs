@@ -1,7 +1,7 @@
 ﻿namespace Alura.Adopet.Console.Comandos;
 
 [AttributeUsage(AttributeTargets.Class)]
-internal sealed class DocComando : Attribute
+public sealed class DocComando : Attribute
 {
     public DocComando(string instrucao, string documentacao)
     {

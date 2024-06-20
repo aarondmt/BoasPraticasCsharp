@@ -2,6 +2,6 @@
 
 public enum TipoPet
 {
-    Gato,
-    Cachorro
+    Gato = 0,
+    Cachorro = 1
 }
