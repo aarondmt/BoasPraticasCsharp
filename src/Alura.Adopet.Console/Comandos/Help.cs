@@ -9,7 +9,7 @@ namespace Alura.Adopet.Console.Comandos
     [DocComandoAttribute(instrucao: "help",
      documentacao: "adopet help comando que exibe informações da ajuda. \n" +
         "adopet help <NOME_COMANDO> para acessar a ajuda de um comando específico.")]
-    public class Help:IComando
+    public class Help : IComando
     {
         private Dictionary<string, DocComandoAttribute> docs;
         private string? comando;
@@ -23,8 +23,8 @@ namespace Alura.Adopet.Console.Comandos
         {
             try
             {
-                  return Task.FromResult(Result.Ok()
-                    .WithSuccess(new SuccessWithDocs(this.GerarDocumentacao())));
+                return Task.FromResult(Result.Ok()
+                  .WithSuccess(new SuccessWithDocs(this.GerarDocumentacao())));
             }
             catch (Exception exception)
             {
@@ -45,7 +45,7 @@ namespace Alura.Adopet.Console.Comandos
             }
             // exibe o help daquele comando específico
             else
-            {  
+            {
                 if (docs.ContainsKey(this.comando))
                 {
                     var comando = docs[this.comando];
@@ -56,7 +56,6 @@ namespace Alura.Adopet.Console.Comandos
                     resultado.Add("Comando não encontrado!");
                     throw new ArgumentException();
                 }
-
             }
             return resultado;
         }

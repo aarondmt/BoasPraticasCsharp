@@ -2,11 +2,11 @@
 using Alura.Adopet.Console.Servicos.Arquivos;
 
 namespace Alura.Adopet.Testes.Servicos;
-
-public class LeitorDeArquivoJsonTest : IDisposable
+public class ClientesDoJsonTest : IDisposable
 {
-    private string caminhoArquivo;
-    public LeitorDeArquivoJsonTest()
+    private readonly string caminhoArquivo;
+
+    public ClientesDoJsonTest()
     {
         //Setup
         string conteudo = @"
@@ -14,17 +14,17 @@ public class LeitorDeArquivoJsonTest : IDisposable
               {
                 ""Id"": ""68286fbf-f6f4-4924-adab-0637511813e0"",
                 ""Nome"": ""Mancha"",
-                ""Tipo"": 1
+                ""Email"": ""mancha@teste.com""
               },
               {
                 ""Id"": ""68286fbf-f6f4-4924-adab-0637511672e0"",
                 ""Nome"": ""Alvo"",
-                ""Tipo"": 1
+                ""Email"": ""alvo@teste.com""
               },
               {
                 ""Id"": ""68286fbf-f6f4-1234-adab-0637511672e0"",
                 ""Nome"": ""Pinta"",
-                ""Tipo"": 1
+                ""Email"": ""pinta@teste.com""
               }
             ]
         ";
@@ -36,19 +36,18 @@ public class LeitorDeArquivoJsonTest : IDisposable
     }
 
     [Fact]
-    public void QuandoArquivoExistenteDeveRetornarUmaListaDePets()
+    public void QuandoArquivoExistenteDeveRetornarUmaListaDeClientes()
     {
         //Arrange            
         //Act
-        var listaDePets = new LeitorDeArquivosJson<Pet>(caminhoArquivo).RealizaLeitura()!;
+        var lista = new LeitorDeArquivosJson<Cliente>(caminhoArquivo).RealizaLeitura()!;
         //Assert
-        Assert.NotNull(listaDePets);
-        Assert.IsType<List<Pet>?>(listaDePets);
+        Assert.NotNull(lista);
+        Assert.Equal(3, lista.Count());
     }
 
     public void Dispose()
     {
-        //ClearDown
         File.Delete(caminhoArquivo);
     }
 }
