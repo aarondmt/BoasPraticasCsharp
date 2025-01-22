@@ -33,6 +33,4 @@ public class HelpTest
         Assert.NotNull(resultado);
         Assert.True(resultado.IsSuccess);
     }
-
-
 }
