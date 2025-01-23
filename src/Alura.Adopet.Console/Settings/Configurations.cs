@@ -8,17 +8,29 @@ public static class Configurations
         return new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddUserSecrets("d19606d3-e481-4de2-aae1-6087c7877b34")
             .Build();
     }
 
-    public static AppSettings ApiSettigs
+    public static ApiSettings ApiSettigs
     {
         get
         {
             var _config = BuildConfiguration();
             return _config
-                .GetSection(AppSettings.Section)
-                .Get<AppSettings>() ?? throw new ArgumentException("Seção para configuração da API não encontrada!");
+                .GetSection(ApiSettings.Section)
+                .Get<ApiSettings>() ?? throw new ArgumentException("Seção para configuração da API não encontrada!");
+        }
+    }
+
+    public static MailSettings EmailSettings
+    {
+        get
+        {
+            var _config = BuildConfiguration();
+            return _config
+                .GetSection(MailSettings.Section)
+                .Get<MailSettings>() ?? throw new ArgumentException("Seção para configuração do Serviço de Email não encontrado!");
         }
     }
 }

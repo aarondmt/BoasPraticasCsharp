@@ -1,6 +1,7 @@
 ﻿using Alura.Adopet.Console.Comandos;
 using Alura.Adopet.Console.Modelos;
 using Alura.Adopet.Console.Servicos.Http;
+using Alura.Adopet.Console.Settings;
 using Alura.Adopet.TestesIntegracao.Builder;
 
 namespace Alura.Adopet.TestesIntegracao;
@@ -18,7 +19,7 @@ public class ImportIntegrationTest
         listaDePet.Add(pet);
 
         var leitorDeArquivo = LeitorDeArquivosMockBuilder.GetMock(listaDePet);
-        var httpClientPet = new PetService(new AdopetAPIClientFactory().CreateClient("adopet"));
+        var httpClientPet = new PetService(new AdopetAPIClientFactory(Configurations.ApiSettigs.Uri).CreateClient("adopet"));
         var import = new Import(httpClientPet, leitorDeArquivo.Object);
 
         //Act
